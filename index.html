@@ -1,0 +1,98 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Helldivers 2 War Monitor</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #1a1a1a;
+                color: #ffffff;
+            }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            .status-box {
+                background-color: #2a2a2a;
+                border: 1px solid #3a3a3a;
+                border-radius: 5px;
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            .update {
+                padding: 10px;
+                margin: 5px 0;
+                border-left: 3px solid #ffcc00;
+                background-color: #333333;
+            }
+            .planet-alert {
+                color: #ff4444;
+            }
+            .order-alert {
+                color: #44ff44;
+            }
+            #last-updated {
+                color: #888888;
+                font-size: 0.8em;
+                text-align: right;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Helldivers 2 War Monitor</h1>
+            <div class="status-box">
+                <h2>Active Planets</h2>
+                <div id="planets"></div>
+            </div>
+            <div class="status-box">
+                <h2>Major Orders</h2>
+                <div id="orders"></div>
+            </div>
+            <div class="status-box">
+                <h2>Recent Updates</h2>
+                <div id="updates"></div>
+            </div>
+            <div id="last-updated"></div>
+        </div>
+        
+        <script>
+            let audio = new Audio('alert.mp3');
+            
+            function updateDisplay(data) {
+                document.getElementById('planets').innerHTML = data.planets.map(p => 
+                    `<div class="update planet-alert">${p}</div>`
+                ).join('');
+                
+                document.getElementById('orders').innerHTML = data.orders.map(o => 
+                    `<div class="update order-alert">${o}</div>`
+                ).join('');
+                
+                document.getElementById('updates').innerHTML = data.updates.map(u => 
+                    `<div class="update">${u}</div>`
+                ).join('');
+                
+                document.getElementById('last-updated').textContent = 
+                    `Last updated: ${new Date().toLocaleString()}`;
+                
+                if (data.updates.length > 0) {
+                    audio.play();
+                }
+            }
+            
+            function fetchUpdates() {
+                fetch('/api/war-status')
+                    .then(response => response.json())
+                    .then(data => updateDisplay(data))
+                    .catch(error => console.error('Error:', error));
+            }
+            
+            // Update every 5 minutes
+            setInterval(fetchUpdates, 300000);
+            fetchUpdates();
+        </script>
+    </body>
+    </html>
+    
