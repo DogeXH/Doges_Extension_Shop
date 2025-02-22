@@ -1,98 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChromeTools Marketplace</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="nav-container">
+            <div class="logo">ChromeTools</div>
+            <ul class="nav-links">
+                <li><a href="#extensions">Extensions</a></li>
+                <li><a href="#bookmarklets">Bookmarklets</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="login-btn"><a href="#login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Helldivers 2 War Monitor</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 20px;
-                background-color: #1a1a1a;
-                color: #ffffff;
-            }
-            .container {
-                max-width: 800px;
-                margin: 0 auto;
-            }
-            .status-box {
-                background-color: #2a2a2a;
-                border: 1px solid #3a3a3a;
-                border-radius: 5px;
-                padding: 15px;
-                margin-bottom: 15px;
-            }
-            .update {
-                padding: 10px;
-                margin: 5px 0;
-                border-left: 3px solid #ffcc00;
-                background-color: #333333;
-            }
-            .planet-alert {
-                color: #ff4444;
-            }
-            .order-alert {
-                color: #44ff44;
-            }
-            #last-updated {
-                color: #888888;
-                font-size: 0.8em;
-                text-align: right;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h1>Helldivers 2 War Monitor</h1>
-            <div class="status-box">
-                <h2>Active Planets</h2>
-                <div id="planets"></div>
+    <main>
+        <section class="hero">
+            <h1>Enhance Your Chrome Experience</h1>
+            <p>Professional tools to boost your productivity and browsing experience</p>
+            <a href="#browse" class="cta-button">Browse Tools</a>
+        </section>
+
+        <section id="extensions" class="products-section">
+            <h2>Featured Extensions</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="img/extension1.png" alt="Extension 1">
+                    <h3>ProductivityBoost Pro</h3>
+                    <p>Streamline your workflow with advanced automation</p>
+                    <span class="price">$4.99</span>
+                    <button class="buy-button">Buy Now</button>
+                </div>
+                <!-- Add more product cards -->
             </div>
-            <div class="status-box">
-                <h2>Major Orders</h2>
-                <div id="orders"></div>
+        </section>
+
+        <section id="bookmarklets" class="products-section">
+            <h2>Popular Bookmarklets</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="img/bookmarklet1.png" alt="Bookmarklet 1">
+                    <h3>QuickSearch Plus</h3>
+                    <p>Instant multi-engine search capabilities</p>
+                    <span class="price">$1.99</span>
+                    <button class="buy-button">Buy Now</button>
+                </div>
+                <!-- Add more product cards -->
             </div>
-            <div class="status-box">
-                <h2>Recent Updates</h2>
-                <div id="updates"></div>
+        </section>
+
+        <section id="pricing" class="pricing-section">
+            <h2>Subscription Plans</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Basic</h3>
+                    <p class="price">$9.99/month</p>
+                    <ul>
+                        <li>5 Extensions</li>
+                        <li>10 Bookmarklets</li>
+                        <li>Basic Support</li>
+                    </ul>
+                    <button class="subscribe-button">Subscribe</button>
+                </div>
+                <!-- Add more pricing cards -->
             </div>
-            <div id="last-updated"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <p>Providing quality Chrome tools since 2024</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: support@chrometools.com</p>
+            </div>
         </div>
-        
-        <script>
-            let audio = new Audio('alert.mp3');
-            
-            function updateDisplay(data) {
-                document.getElementById('planets').innerHTML = data.planets.map(p => 
-                    `<div class="update planet-alert">${p}</div>`
-                ).join('');
-                
-                document.getElementById('orders').innerHTML = data.orders.map(o => 
-                    `<div class="update order-alert">${o}</div>`
-                ).join('');
-                
-                document.getElementById('updates').innerHTML = data.updates.map(u => 
-                    `<div class="update">${u}</div>`
-                ).join('');
-                
-                document.getElementById('last-updated').textContent = 
-                    `Last updated: ${new Date().toLocaleString()}`;
-                
-                if (data.updates.length > 0) {
-                    audio.play();
-                }
-            }
-            
-            function fetchUpdates() {
-                fetch('/api/war-status')
-                    .then(response => response.json())
-                    .then(data => updateDisplay(data))
-                    .catch(error => console.error('Error:', error));
-            }
-            
-            // Update every 5 minutes
-            setInterval(fetchUpdates, 300000);
-            fetchUpdates();
-        </script>
-    </body>
-    </html>
+    </footer>
+</body>
+</html>
     
